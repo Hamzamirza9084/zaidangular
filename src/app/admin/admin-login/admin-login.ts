@@ -1,26 +1,42 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Import Router
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http'; // 1. Import HttpClient
 
 @Component({
   selector: 'app-admin-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule], // Remove RouterLink if not used in HTML, or keep it
   templateUrl: './admin-login.html',
 })
 export class AdminLogin {
   adminLoginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   });
 
-  constructor(private router: Router) {}
+  // 2. Inject HttpClient
+  constructor(private router: Router, private http: HttpClient) {}
 
   onAdminLogin() {
-    // Perform authentication logic here
-    console.log('Admin login attempt');
-    
-    // On success, redirect to User Management
-    this.router.navigate(['/admin/users']);
+    if (this.adminLoginForm.valid) {
+      // 3. Send Request to Backend
+      this.http.post('http://localhost:3000/admin/login', this.adminLoginForm.value)
+        .subscribe({
+          next: (response: any) => {
+            console.log('Admin Access Granted');
+            
+            // Store admin session (optional but recommended)
+            localStorage.setItem('adminUser', 'true');
+
+            // Redirect to User Management
+            this.router.navigate(['/admin/users']);
+          },
+          error: (error) => {
+            console.error('Admin Login Failed', error);
+            alert('Invalid Admin Username or Password');
+          }
+        });
+    }
   }
 }

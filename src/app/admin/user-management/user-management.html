@@ -1,1 +1,98 @@
-<p>user-management works!</p>
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+  
+  <main class="flex-1 py-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <nav class="mb-4 flex items-center text-sm text-slate-500">
+        <span class="font-medium text-slate-900">User Management</span>
+      </nav>
+      <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight text-slate-900">User Management</h1>
+          <p class="mt-2 text-base text-slate-600">Manage access, roles, and platform activity.</p>
+        </div>
+        <div class="flex gap-3">
+          <button class="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-600 transition-all">
+            <span class="material-symbols-outlined text-[20px]">add</span> Add User
+          </button>
+        </div>
+      </div>
+  
+      <div class="mb-6 grid gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-12">
+        <div class="relative sm:col-span-6 md:col-span-5">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+          <input class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-4 text-sm outline-none focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary" placeholder="Search users..."/>
+        </div>
+      </div>
+  
+      <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full whitespace-nowrap text-left text-sm">
+            <thead class="bg-slate-50 text-slate-500">
+              <tr>
+                <th class="px-6 py-4 font-semibold">User</th>
+                <th class="px-6 py-4 font-semibold">Role</th>
+                <th class="px-6 py-4 font-semibold">Status</th>
+                <th class="px-6 py-4 font-semibold">Last Active</th>
+                <th class="px-6 py-4 text-right font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              
+              <tr *ngFor="let user of users" class="group hover:bg-slate-50/80 transition-colors">
+                
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-4">
+                    <div class="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-slate-100">
+                      <img [src]="user.avatarUrl" alt="Avatar" class="h-full w-full object-cover">
+                    </div>
+                    <div>
+                      <div class="font-semibold text-slate-900">{{ user.name }}</div>
+                      <div class="text-xs text-slate-500">{{ user.email }}</div>
+                    </div>
+                  </div>
+                </td>
+                
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600">
+                    <span class="h-1.5 w-1.5 rounded-full" [ngClass]="getRoleColor(user.role)"></span>
+                    {{ user.role }}
+                  </span>
+                </td>
+                
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset" [ngClass]="getStatusClass(user.status)">
+                    {{ user.status }}
+                  </span>
+                </td>
+                
+                <td class="px-6 py-4 text-slate-600">
+                  {{ user.lastActive | date:'short' }}
+                </td>
+                
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button class="rounded p-1 text-slate-400 hover:bg-primary/10 hover:text-primary transition-colors" title="Edit">
+                      <span class="material-symbols-outlined text-[20px]">edit</span>
+                    </button>
+                    <button class="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-colors" title="Delete">
+                      <span class="material-symbols-outlined text-[20px]">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              
+              <tr *ngIf="users.length === 0">
+                <td colspan="5" class="px-6 py-8 text-center text-slate-500">
+                  No users found.
+                </td>
+              </tr>
+  
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+    </div>
+  </main>
+</div>
