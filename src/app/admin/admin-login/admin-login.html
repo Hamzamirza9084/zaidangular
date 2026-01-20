@@ -1,1 +1,18 @@
-<p>admin-login works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5 glass-card">
+      <h2 class="text-center mb-4">Admin Portal</h2>
+      <form [formGroup]="adminLoginForm" (ngSubmit)="onAdminLogin()">
+        <div class="mb-3">
+          <input type="text" class="form-control glass-input" placeholder="Username" formControlName="username">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control glass-input" placeholder="Password" formControlName="password">
+        </div>
+        <button type="submit" class="btn btn-danger w-100" [disabled]="adminLoginForm.invalid">
+          Access Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

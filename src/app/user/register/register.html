@@ -1,14 +1,28 @@
-<p>register works!</p>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-5 glass-card">
+      <h2 class="text-center mb-4">Create Account</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+        <div class="mb-3">
+          <input type="text" class="form-control glass-input" placeholder="Full Name" formControlName="name">
+        </div>
 
-  <input type="text" placeholder="Name" formControlName="name">
+        <div class="mb-3">
+          <input type="email" class="form-control glass-input" placeholder="Email Address" formControlName="email">
+        </div>
 
-  <input type="email" placeholder="Email" formControlName="email">
+        <div class="mb-3">
+          <input type="password" class="form-control glass-input" placeholder="Password (Min 6 chars)" formControlName="password">
+        </div>
 
-  <input type="password" placeholder="Password" formControlName="password">
-
-  <button type="submit" [disabled]="registerForm.invalid">
-    Register
-  </button>
-
-</form>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
+          Register
+        </button>
+      </form>
+      <div class="mt-3 text-center">
+        <small>Already have an account? <a routerLink="/login" class="text-white">Login here</a></small>
+      </div>
+    </div>
+  </div>
+</div>
